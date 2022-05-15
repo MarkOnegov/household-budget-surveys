@@ -10,3 +10,11 @@ security:
   jwt:
     secret: 'secret'
     expires-in: '1h'
+
+log:
+  level:
+    - 'log'
+    - 'error'
+    - 'warn'
+    - 'debug'
+    - 'verbose'

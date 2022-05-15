@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
-import { LoginForm, SuccussLogin } from '../../common/types/auth.types';
+import { SuccussLogin } from '../../common/types/auth.types';
 import { User } from '../../common/types/user.types';
 import { UsersService } from '../users/users.service';
 
@@ -21,11 +21,7 @@ export class AuthService {
     return null;
   }
 
-  async login(credentials: LoginForm): Promise<SuccussLogin> {
-    const user = await this.validateUser(
-      credentials.username,
-      credentials.password,
-    );
+  async login(user: User): Promise<SuccussLogin> {
     if (!user) {
       throw new UnauthorizedException();
     }

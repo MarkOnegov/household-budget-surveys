@@ -1,16 +1,17 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Request } from 'express';
 import { SuccussLogin } from '../../common/types/auth.types';
-import { LoginFormDTO } from '../dto/auth.dto';
+import { User } from '../../common/types/user.types';
 import { AuthService } from './auth.service';
-import { Public } from './public.decorator';
+import { LocalAuthGuard } from './guards/local-auth.guard';
 
-@Public()
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Body() credentials: LoginFormDTO): Promise<SuccussLogin> {
-    return this.authService.login(credentials);
+  async login(@Req() req: Request): Promise<SuccussLogin> {
+    return this.authService.login(req.user as User);
   }
 }

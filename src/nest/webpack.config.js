@@ -1,4 +1,6 @@
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 
 const OUTPUT_PATH = '../../dist/nest';
 const OUTPUT_FILE_NAME = 'main.js';
@@ -15,6 +17,11 @@ module.exports = (options) => {
       patterns: [{ from: '**/*.yaml', to: '[name][ext]', toType: 'template' }],
     }),
   );
+  options.plugins.push(
+    new webpack.WatchIgnorePlugin({
+      paths: [/\/dist\//, /\/angular\//, /\/node_modules\//, /\/.[^/]+/],
+    }),
+  );
   if (
     (process.argv.includes('b') || process.argv.includes('build')) &&
     (process.argv.includes('--watch') || process.argv.includes('-w'))
@@ -24,31 +31,32 @@ module.exports = (options) => {
     if (!options.plugins) {
       options.plugins = [];
     }
-    options.watchOptions = {
-      ignored: [
-        'dist',
-        'src/angular',
-        'node_modules',
-        'test/angular',
-        'tsconfig/angular',
-      ],
-    };
+    if (!options.stats) {
+      options.stats = {};
+    }
+    options.stats.logging = 'verbose';
     let child;
+    let hash;
     options.plugins.push({
       apply: (compiler) => {
         compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
-          if (child) {
-            if (!child.kill()) {
-              child.kill(9);
+          const newHash = compilation.getStats().hash;
+          if (newHash !== hash) {
+            if (child) {
+              if (!child.kill()) {
+                child.kill(9);
+              }
             }
+
+            child = spawn('node', [filePath]);
+            child.stdout.on('data', function (data) {
+              process.stdout.write(data);
+            });
+            child.stderr.on('data', function (data) {
+              process.stderr.write(data);
+            });
           }
-          child = spawn('node', [filePath]);
-          child.stdout.on('data', function (data) {
-            process.stdout.write(data);
-          });
-          child.stderr.on('data', function (data) {
-            process.stderr.write(data);
-          });
+          hash = newHash;
         });
       },
     });
