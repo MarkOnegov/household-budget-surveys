@@ -10,6 +10,11 @@ module.exports = (options) => {
   options.output.path = path.resolve(__dirname, OUTPUT_PATH);
   options.output.filename = OUTPUT_FILE_NAME;
   console.debug(options);
+  options.plugins.push(
+    new CopyWebpackPlugin({
+      patterns: [{ from: '**/*.yaml', to: '[name][ext]', toType: 'template' }],
+    }),
+  );
   if (
     (process.argv.includes('b') || process.argv.includes('build')) &&
     (process.argv.includes('--watch') || process.argv.includes('-w'))

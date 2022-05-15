@@ -1,0 +1,12 @@
+http:
+  host: 'localhost'
+  port: 3000
+
+db:
+  mongo:
+    url: 'mongodb://localhost/hbs'
+
+security:
+  jwt:
+    secret: 'secret'
+    expires-in: '1h'
