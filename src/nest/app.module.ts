@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import configuration from './configuration';
 import { UsersModule } from './users/users.module';
+import { HouseholdsModule } from './households/households.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     AuthModule,
     UsersModule,
+    HouseholdsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

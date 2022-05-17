@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+.cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 2em;
+  flex: 1 1 auto;
+  max-width: 700px;
+}
+
+mat-card {
+  width: 240px;
+  box-sizing: border-box;
+}
+
+mat-icon.mat-card-image {
+  width: 240px;
+  height: 240px;
+  font-size: 240px;
+  margin-bottom: -32px;
+  margin-top: -32px;
+}

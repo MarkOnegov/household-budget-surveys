@@ -1,0 +1,11 @@
+<div class="cards">
+  <a *ngFor="let link of links" [routerLink]="link.link">
+    <mat-card>
+      <mat-icon mat-card-image>{{ link.icon }}</mat-icon>
+      <mat-card-content>
+        <h3>{{ link.label | translate }}</h3>
+        <p>{{ link.description | translate }}</p>
+      </mat-card-content>
+    </mat-card>
+  </a>
+</div>

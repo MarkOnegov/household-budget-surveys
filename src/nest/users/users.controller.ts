@@ -9,6 +9,7 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+  @Roles(Role.ADMIN)
   @Get()
   async find(@Query() query: PaginationQueryDTO) {
     return this.usersService.find(query.pageIndex, query.pageSize);

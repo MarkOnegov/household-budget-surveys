@@ -1,0 +1,41 @@
+<table mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ 'ADMIN_PANEL.USERS.TABLE.COLUMNS.NAME' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let user">{{ getName(user) }}</td>
+  </ng-container>
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ 'ADMIN_PANEL.USERS.TABLE.COLUMNS.EMAIL' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let user">
+      <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="roles">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ 'ADMIN_PANEL.USERS.TABLE.COLUMNS.ROLES' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let user">{{ getRoles(user) }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<mat-paginator
+  [length]="length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="pageChanged($event)"
+>
+</mat-paginator>
+<div class="button-wrapper" [class.center]="!isSmallScreen">
+  <button mat-fab [class.mat-fab-text]="!isSmallScreen" color="primary">
+    <mat-icon>add</mat-icon>
+    <span *ngIf="!isSmallScreen">
+      {{ 'BUTTONS.CREATE' | translate | uppercase }}
+    </span>
+  </button>
+</div>

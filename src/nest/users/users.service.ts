@@ -4,7 +4,11 @@ import { hash } from 'bcryptjs';
 import { Model } from 'mongoose';
 import { Paginate } from '../../common/types/pagination.types';
 import { PartialUser, Role, User } from '../../common/types/user.types';
-import { UserDocument, UserEntity } from '../schemas/user.schema';
+import {
+  UserDocument,
+  UserEntity,
+  USER_UPDATABLE_FIELDS,
+} from '../schemas/user.schema';
 
 @Injectable()
 export class UsersService {
@@ -23,12 +27,34 @@ export class UsersService {
     });
   }
 
-  async findOne(username: string) {
-    const user = await this.userModel.findOne({ username });
+  async findOne(
+    username: string | Partial<UserEntity>,
+    full?: true,
+  ): Promise<UserEntity | undefined>;
+  async findOne(
+    username: string,
+    full?: boolean,
+  ): Promise<User | UserEntity | undefined> {
+    const user = (
+      await (typeof username === 'object'
+        ? this.userModel.findOne(username)
+        : this.userModel.findOne({ username }))
+    )?.toObject();
     if (!user) {
       return undefined;
     }
-    return user.toObject();
+    if (full) {
+      return user;
+    }
+    const { email, roles, firstName, lastName, secondName } = user as User;
+    return {
+      email,
+      roles,
+      username: user.username,
+      firstName,
+      lastName,
+      secondName,
+    };
   }
 
   async find(pageIndex = 0, pageSize = 10): Promise<Paginate<User>> {
@@ -39,35 +65,42 @@ export class UsersService {
         .skip(pageIndex * pageSize)
         .limit(pageSize)
     ).map((user) => {
-      const fromDb = user.toObject() as PartialUser;
-      delete fromDb.password;
-      return fromDb as User;
+      const { email, roles, username, firstName, lastName, secondName } =
+        user.toObject() as User;
+      return { email, roles, username, firstName, lastName, secondName };
     });
     const length = await this.userModel.count();
     return { data: users, pagination: { length, pageIndex, pageSize } };
   }
 
-  async update(username: string, user: PartialUser) {
+  async update(username: string, user: Partial<UserEntity>) {
     if (user.password) {
       user.password = await hash(user.password, 10);
     }
-    return (
+    USER_UPDATABLE_FIELDS.forEach((field) => {
+      if (user[field] === undefined) {
+        delete user[field];
+      }
+    });
+    const fromDb = await (
       await this.userModel.findOneAndUpdate({ username }, user)
-    )?.toObject();
+    )?.save();
+    if (!fromDb) {
+      return undefined;
+    }
+    const { email, roles, firstName, lastName, secondName } = fromDb;
+    return { email, roles, username, firstName, lastName, secondName };
   }
 
   async create(user: UserEntity) {
     user.password = await hash(user.password, 10);
-    if (!user.roles.includes(Role.USER)) {
-      user.roles.push(Role.USER);
-    }
     const fromDb = (await (
       await new this.userModel(user).save()
     )?.toObject()) as PartialUser;
     if (!fromDb) {
       return undefined;
     }
-    delete fromDb.password;
-    return fromDb as User;
+    const { email, roles, username, firstName, lastName, secondName } = fromDb;
+    return { email, roles, username, firstName, lastName, secondName };
   }
 }

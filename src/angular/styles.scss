@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.mat-fab-text {
+  width: auto !important;
+  padding-left: 28px !important;
+  padding-right: 28px !important;
+  border-radius: 28px !important;
+  .mat-button-wrapper {
+    display: flex !important;
+    align-items: center;
+    gap: 4px;
+  }
+}

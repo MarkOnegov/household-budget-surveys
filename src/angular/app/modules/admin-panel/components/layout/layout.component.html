@@ -1,0 +1,43 @@
+<mat-drawer-container>
+  <mat-drawer #drawer mode="over">
+    <ng-component *ngTemplateOutlet="nav"></ng-component>
+  </mat-drawer>
+  <div class="main">
+    <div class="title">
+      <button *ngIf="isSmallScreen" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="page-title">{{ currentLabel | translate }}</span>
+    </div>
+    <div class="content">
+      <div *ngIf="!isSmallScreen" class="navigation-wrapper">
+        <div class="navigation">
+          <ng-component *ngTemplateOutlet="nav"></ng-component>
+        </div>
+      </div>
+
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+      <!-- <div>
+        <button type="button" mat-button (click)="drawer.toggle()">
+          Toggle sidenav
+        </button>
+      </div> -->
+    </div>
+  </div>
+</mat-drawer-container>
+
+<ng-template #nav>
+  <mat-nav-list>
+    <a
+      mat-list-item
+      *ngFor="let link of links"
+      [routerLink]="link.link"
+      routerLinkActive="router-link-active"
+      (click)="drawer.close()"
+    >
+      {{ link.label | translate }}
+    </a>
+  </mat-nav-list>
+</ng-template>
