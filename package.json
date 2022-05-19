@@ -11,11 +11,9 @@
     "format": "prettier --write \"src/**/*.((j|t)s|json)\" \"test/**/*.((j|t)s|json)\"",
     "start": "concurrently -n nest,angular --kill-others \"npm run nest:start\" \"npm run angular:start\"",
     "build": "npm run nest:build && npm run angular:build",
-    "watch": "concurrently -n nest,angular --kill-others \"npm run nest:watch\" \"npm run angular:watch\"",
     "test": "npm run nest:test && npm run angular:test",
     "nest:start": "nest start --debug --watch",
     "nest:build": "nest build",
-    "nest:watch": "nest build --watch",
     "nest:test": "jest",
     "nest:test:watch": "jest --watch",
     "nest:test:cov": "jest --coverage",
@@ -23,7 +21,6 @@
     "nest:test:e2e": "jest --config ./test/nest/jest-e2e.json",
     "angular:start": "ng serve",
     "angular:build": "ng build",
-    "angular:watch": "ng build --watch --configuration development",
     "angular:test": "ng test",
     "lint": "eslint \"{src,test}/**/*.ts\" --fix"
   },
@@ -43,7 +40,6 @@
     "@nestjs/core": "^8.0.0",
     "@nestjs/jwt": "^8.0.0",
     "@nestjs/mapped-types": "^1.0.1",
-    "@nestjs/mongoose": "^9.0.3",
     "@nestjs/passport": "^8.2.1",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/serve-static": "^2.2.2",
@@ -53,7 +49,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "js-yaml": "^4.1.0",
-    "mongoose": "^6.3.3",
+    "nano": "^10.0.0",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
@@ -80,6 +76,7 @@
     "@types/passport-local": "^1.0.34",
     "@types/supertest": "^2.0.11",
     "@types/uuid": "^8.3.4",
+    "@types/webpack-env": "^1.16.4",
     "@types/webpack-node-externals": "^2.5.3",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
@@ -102,9 +99,7 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "4.0.0",
-    "typescript": "~4.6.2",
-    "uuid": "^8.3.2",
-    "webpack": "^5.72.1"
+    "typescript": "~4.6.2"
   },
   "jest": {
     "moduleFileExtensions": [

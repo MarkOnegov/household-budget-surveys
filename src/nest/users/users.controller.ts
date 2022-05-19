@@ -2,7 +2,6 @@ import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { Role } from '../../common/types/user.types';
 import { Roles } from '../auth/roles.decorator';
 import { PaginationQueryDTO } from '../dto/pagination.dto';
-import { CrateUserDTO, UpdateUserDTO } from '../dto/user.dto';
 import { UsersService } from './users.service';
 
 @Controller('user')
@@ -17,15 +16,12 @@ export class UsersController {
 
   @Roles(Role.ADMIN)
   @Post()
-  async create(@Body() user: CrateUserDTO) {
+  async create(@Body() user: unknown) {
     return this.usersService.create(user);
   }
 
   @Put(':username')
-  async update(
-    @Param('username') username: string,
-    @Body() user: UpdateUserDTO,
-  ) {
+  async update(@Param('username') username: string, @Body() user: unknown) {
     return this.usersService.update(username, user);
   }
 }

@@ -297,10 +297,10 @@ export enum FreeProductType {
   LEISURE = 13,
 }
 
-export interface FreeProduct {
+export type FreeProduct = {
   type: FreeProductType;
   cost: number | Income;
-}
+};
 
 export type UseMaterialCapital = {
   materialCapital?: number;
@@ -346,14 +346,14 @@ export enum OperatingProductName {
   COMMUNICATION = 8,
 }
 
-export interface OperatingProduct {
+export type OperatingProduct = {
   name: OperatingProductName;
   code: number;
   hasOperationCost: boolean;
   operationCost: number;
   hasMaintenanceCost: boolean;
   maintenanceCost: number;
-}
+};
 
 export enum TvType {
   COLLECTIVE = 1,

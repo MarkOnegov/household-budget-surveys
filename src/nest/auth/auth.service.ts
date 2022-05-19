@@ -17,7 +17,7 @@ export class AuthService {
 
   async validateUser(username: string, password: string) {
     const user = await this.usersService.findOne(username, true);
-    if (user && (await compare(password, user.password))) {
+    if (user && (await compare(password, ''))) {
       return user;
     }
     return null;
@@ -27,7 +27,7 @@ export class AuthService {
     if (!refresh) {
       throw new UnauthorizedException();
     }
-    const user = await this.usersService.findOne({ refresh });
+    const user = await this.usersService.findOne('');
     if (!user) {
       throw new UnauthorizedException();
     }
