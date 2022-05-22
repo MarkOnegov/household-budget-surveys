@@ -1,3 +1,4 @@
+import { NanoModule } from '@monegov/nano';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -15,7 +16,11 @@ import { UsersModule } from './users/users.module';
       rootPath: join(__dirname, 'angular'),
     }),
     ConfigModule.forRoot({ load: [configuration] }),
-    UsersModule,
+    NanoModule.forRoot({
+      connection: 'http://admin:admin@localhost:5984',
+      database: 'hbs',
+    }),
+    UsersModule.register(),
     AuthModule,
     UsersModule,
     HouseholdsModule,

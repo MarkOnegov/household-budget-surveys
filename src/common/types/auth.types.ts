@@ -1,7 +1,7 @@
-import { User } from './user.types';
+import { Role } from './user.types';
 
 export interface SuccussLogin {
-  user: User;
+  user: { username: string; roles: Role[] };
   access_token: string;
   refresh_token: string;
 }

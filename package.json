@@ -8,7 +8,7 @@
   "scripts": {
     "ng": "ng",
     "prebuild": "rimraf dist",
-    "format": "prettier --write \"src/**/*.((j|t)s|json)\" \"test/**/*.((j|t)s|json)\"",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
     "start": "concurrently -n nest,angular --kill-others \"npm run nest:start\" \"npm run angular:start\"",
     "build": "npm run nest:build && npm run angular:build",
     "test": "npm run nest:test && npm run angular:test",
@@ -118,7 +118,11 @@
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "roots": [
-      "<rootDir>/src/"
-    ]
+      "<rootDir>/src/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "^@monegov/nano(|/.*)$": "<rootDir>/libs/nano/src/$1"
+    }
   }
 }

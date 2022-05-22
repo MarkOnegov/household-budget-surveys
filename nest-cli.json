@@ -21,6 +21,15 @@
         "tsConfigPath": "tsconfig.build.json"
       },
       "type": "application"
+    },
+    "nano": {
+      "type": "library",
+      "root": "libs/nano",
+      "entryFile": "index",
+      "sourceRoot": "libs/nano/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/nano/tsconfig.lib.json"
+      }
     }
   }
 }

@@ -11,17 +11,17 @@ export class UsersController {
   @Roles(Role.ADMIN)
   @Get()
   async find(@Query() query: PaginationQueryDTO) {
-    return this.usersService.find(query.pageIndex, query.pageSize);
+    // return this.usersService.find(query.pageIndex, query.pageSize);
   }
 
   @Roles(Role.ADMIN)
   @Post()
   async create(@Body() user: unknown) {
-    return this.usersService.create(user);
+    // return this.usersService.create(user);
   }
 
   @Put(':username')
   async update(@Param('username') username: string, @Body() user: unknown) {
-    return this.usersService.update(username, user);
+    // return this.usersService.update(username, user);
   }
 }
