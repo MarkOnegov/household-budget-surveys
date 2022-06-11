@@ -1,4 +1,4 @@
-import { NanoModule } from '@monegov/nano';
+import { NanoModule, UpdateType } from '@monegov/nano';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -19,6 +19,7 @@ import { UsersModule } from './users/users.module';
     NanoModule.forRoot({
       connection: 'http://admin:admin@localhost:5984',
       database: 'hbs',
+      updateType: UpdateType.OVERWRITE_VIEW,
     }),
     UsersModule.register(),
     AuthModule,

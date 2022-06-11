@@ -1,13 +1,16 @@
-export interface PaginationQuery {
-  pageIndex?: number;
-  pageSize?: number;
+export interface Page {
+  page: number;
+  total: number;
+  nextId: string;
 }
 
-export interface Pagination extends Required<PaginationQuery> {
-  length: number;
+export interface PageQuery {
+  page?: number;
+  length?: number;
+  nextId?: string;
 }
 
-export interface Paginate<T> {
+export interface Paginated<T> {
   data: T[];
-  pagination: Pagination;
+  pagination: Page;
 }

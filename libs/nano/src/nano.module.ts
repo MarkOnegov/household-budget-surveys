@@ -1,10 +1,18 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import * as Nano from 'nano';
 import { Designs, NanoService } from './nano.service';
+
+export enum UpdateType {
+  NEW_VIEW,
+  OVERWRITE_VIEW,
+  DROP_CREATE,
+}
+
 export type NanoConfiguration = {
   connection: string | Nano.Configuration;
   database: string;
   designs?: Designs;
+  updateType?: UpdateType;
 };
 
 @Module({ providers: [NanoService], exports: [NanoService] })

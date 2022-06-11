@@ -1,11 +1,16 @@
-import { IsNumberString, IsOptional } from 'class-validator';
-import { PaginationQuery } from '../../common/types/pagination.types';
+import { Type } from 'class-transformer';
+import { IsNumber, IsOptional } from 'class-validator';
+import { PageQuery } from '../../common/types/pagination.types';
 
-export class PaginationQueryDTO implements PaginationQuery {
+export class PageQueryDTO implements PageQuery {
   @IsOptional()
-  @IsNumberString()
-  pageIndex?: number;
+  @Type(() => Number)
+  @IsNumber()
+  page?: number | undefined;
   @IsOptional()
-  @IsNumberString()
-  pageSize?: number;
+  @Type(() => Number)
+  @IsNumber()
+  length?: number | undefined;
+  @IsOptional()
+  nextId?: string | undefined;
 }

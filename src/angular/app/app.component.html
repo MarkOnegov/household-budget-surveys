@@ -16,9 +16,23 @@
   >
     <mat-icon>admin_panel_settings</mat-icon>
   </button>
-  <button mat-icon-button [matTooltip]="'APP.TOOLBAR.LOGOUT' | translate">
+  <a
+    *ngIf="!!authService.currentUser"
+    mat-icon-button
+    [matTooltip]="'APP.TOOLBAR.LOGOUT' | translate"
+    (click)="authService.logout()"
+    [routerLink]="'login'"
+  >
     <mat-icon>logout</mat-icon>
-  </button>
+  </a>
+  <a
+    *ngIf="!authService.currentUser"
+    mat-icon-button
+    [matTooltip]="'APP.TOOLBAR.LOGIN' | translate"
+    [routerLink]="'login'"
+  >
+    <mat-icon>login</mat-icon>
+  </a>
 </mat-toolbar>
 <div class="main">
   <router-outlet></router-outlet>

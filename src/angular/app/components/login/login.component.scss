@@ -1,0 +1,28 @@
+:host,
+.login {
+  display: flex;
+  flex: 1 1 auto;
+  height: 100%;
+  width: 100%;
+}
+
+.login {
+  background-image: url('/assets/images/cover.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-card-content {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

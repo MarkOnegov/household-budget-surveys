@@ -1,0 +1,22 @@
+:host,
+.mat-card-content,
+form {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+.mat-card-content {
+  flex-direction: column;
+}
+
+mat-form-field {
+  min-width: 300px;
+  max-width: 450px;
+  flex: 1 1 auto;
+}
+.mat-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -9,7 +9,7 @@ db:
 security:
   jwt:
     secret: 'secret'
-    expires-in: '1m'
+    expires-in: '30m'
     refresh:
       secret: 'refresh'
       expires-in: '7 days'

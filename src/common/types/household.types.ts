@@ -1,3 +1,4 @@
+import { Field } from '../decorators/form.decorators';
 import { RequiredLiteral } from './type-utils';
 import { User } from './user.types';
 
@@ -214,9 +215,11 @@ export enum ChildBenefitsType {
   OTHER = 7,
 }
 
-export interface HouseholdMember {
-  firstName: string;
-  secondName: string;
+export class HouseholdMember {
+  @Field({ form: 'create-member', type: 'text', required: true, index: 1 })
+  firstName?: string;
+  @Field({ form: 'create-member', type: 'text', required: true, index: 2 })
+  secondName?: string;
   sex?: Sex;
   old?: number;
   relationToResponsiblePerson?: Relationship;
@@ -458,20 +461,80 @@ export type TransportPayment = {
   cost: number;
 };
 
-export interface Household {
-  territory: string;
-  locality: string;
-  okato: string;
-  oktmo: string;
-  localityType: LocalityType;
+export class Household {
+  @Field({ form: 'create-household', required: true, type: 'text', index: 1 })
+  @Field({ form: 'common-household', readonly: true, type: 'text', index: 2 })
+  territory?: string;
+  @Field({ form: 'create-household', required: true, type: 'text', index: 3 })
+  @Field({ form: 'common-household', readonly: true, type: 'text', index: 4 })
+  locality?: string;
+  @Field({ form: 'create-household', required: true, type: 'text', index: 5 })
+  @Field({ form: 'common-household', readonly: true, type: 'text', index: 6 })
+  okato?: string;
+  @Field({ form: 'create-household', required: true, type: 'text', index: 7 })
+  @Field({ form: 'common-household', readonly: true, type: 'text', index: 8 })
+  oktmo?: string;
+  @Field({
+    form: 'create-household',
+    required: true,
+    type: 'enum',
+    values: { ...LocalityType },
+    index: 9,
+  })
+  @Field({
+    form: 'common-household',
+    readonly: true,
+    type: 'enum',
+    values: { ...LocalityType },
+    index: 10,
+  })
+  localityType?: LocalityType;
+  @Field({
+    form: 'common-household',
+    required: true,
+    type: 'number',
+    min: 1,
+    max: 1_000_000,
+    index: 11,
+  })
   censusTractNumber?: number;
+  @Field({
+    form: 'common-household',
+    required: true,
+    type: 'number',
+    min: 1,
+    max: 10_000,
+    index: 12,
+  })
   localHouseHoldNumber?: number;
+  @Field({
+    form: 'common-household',
+    required: true,
+    type: 'date',
+    dateType: 'month',
+    index: 13,
+  })
   surveyStartDate?: Date;
   surveyStartTime?: Date;
   surveyEndTime?: Date;
-  interviewer: User;
+  @Field({
+    form: 'create-household',
+    required: true,
+    type: 'select',
+    itemType: 'user',
+    index: 14,
+  })
+  interviewer?: string | User;
 
+  @Field({
+    form: 'section-1-1-household',
+    type: 'create-array',
+    formName: 'create-member',
+    itemType: HouseholdMember,
+    index: 15,
+  })
   members?: HouseholdMember[];
+  @Field({ form: 'section-1-3-household', type: 'boolean', index: 16 })
   materialCapital?: boolean;
 
   housingAllowances?: HousingAllowance[];

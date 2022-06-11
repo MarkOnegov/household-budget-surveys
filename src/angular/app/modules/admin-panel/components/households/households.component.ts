@@ -75,9 +75,9 @@ export class HouseholdsComponent {
       .getUsers(pageIndex, pageSize)
       .subscribe(({ data, pagination }) => {
         this.dataSource.next(data);
-        this.length = pagination.length;
-        this.pageSize = pagination.pageSize;
-        this.pageIndex = pagination.pageIndex;
+        this.length = pagination.total;
+        this.pageSize = pageSize;
+        this.pageIndex = pagination.page;
       });
   }
 }

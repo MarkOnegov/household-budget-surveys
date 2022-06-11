@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 import { from, lastValueFrom, Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
-const IGNORED_PATTERNS = [/\/api\/auth/];
+const IGNORED_PATTERNS = [/\/api\/auth/, /\/assets\//];
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

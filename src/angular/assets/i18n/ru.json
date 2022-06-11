@@ -6,6 +6,7 @@
         "SHORT": "ОБДХ"
       },
       "LOGOUT": "Выйти",
+      "LOGIN": "Войти",
       "ADMIN_PANEL": "Панель администратора"
     }
   },
@@ -18,6 +19,23 @@
           "NAME": "Имя",
           "EMAIL": "email",
           "ROLES": "Роли пользователя"
+        }
+      },
+      "UPDATE": {
+        "TITLE": {
+          "NEW": "Создание нового пользователя",
+          "UPDATE": "Изменение пользователя {{username}}"
+        },
+        "USERNAME": "Имя пользователя",
+        "FIRST_NAME": "Имя",
+        "SECOND_NAME": "Отчество",
+        "LAST_NAME": "Фамилия",
+        "EMAIL": "email",
+        "PASSWORD": "Пароль",
+        "CONFIRM_PASSWORD": "Подтверждение пароля",
+        "SAVE": {
+          "NEW": "Создать",
+          "UPDATE": "Сохранить"
         }
       }
     },
@@ -32,5 +50,11 @@
   },
   "BUTTONS": {
     "CREATE": "Создать"
+  },
+  "LOGIN": {
+    "TITLE": "Вход",
+    "USERNAME": "Имя пользователя",
+    "PASSWORD": "Пароль",
+    "BUTTON": "Войти"
   }
 }

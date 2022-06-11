@@ -12,7 +12,7 @@ const REFRESH_TOKEN_KEY = 'refresh';
 export class AuthService {
   accessToken?: string;
 
-  currentUser?: User;
+  currentUser?: { username: string; roles: Role[] };
 
   get refreshToken() {
     return localStorage.getItem(REFRESH_TOKEN_KEY) || undefined;

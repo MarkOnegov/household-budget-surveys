@@ -1,6 +1,6 @@
 import { Inject, Injectable, Optional } from '@nestjs/common';
 import * as Nano from 'nano';
-import { NanoConfiguration } from './nano.module';
+import { NanoConfiguration, UpdateType } from './nano.module';
 
 export type BaseDocument = {
   type: string;
@@ -20,6 +20,8 @@ export class NanoService {
   private static server: Nano.ServerScope;
   private static database: Nano.DatabaseScope;
   private static document: Nano.DocumentScope<BaseDocument>;
+
+  private static updateType?: UpdateType;
 
   private static designs: Designs | undefined = {};
 
@@ -41,6 +43,7 @@ export class NanoService {
   ) {
     if (config) {
       NanoService.init(config);
+      NanoService.updateType = config.updateType || UpdateType.NEW_VIEW;
     }
     if (designs) {
       NanoService.initDesigns(designs);
@@ -52,6 +55,9 @@ export class NanoService {
     this.database = this.server.db;
     const dbs = await this.database.list();
     if (!dbs.includes(config.database)) {
+      await this.database.create(config.database);
+    } else if (this.updateType === UpdateType.DROP_CREATE) {
+      await this.database.destroy(config.database);
       await this.database.create(config.database);
     }
     this.document = this.database.use(config.database);
@@ -91,12 +97,15 @@ export class NanoService {
       } catch (e) {}
       let needUpdate = false;
       for (const viewName in design) {
-        if (Object.prototype.hasOwnProperty.call(fromDb.views, viewName)) {
-          needUpdate = true;
-          break;
+        if (
+          Object.prototype.hasOwnProperty.call(fromDb.views, viewName) &&
+          this.updateType == UpdateType.NEW_VIEW
+        ) {
+          continue;
         }
+        needUpdate = true;
+        fromDb.views[viewName] = design[viewName];
       }
-      fromDb.views = Object.assign(fromDb.views, design);
       if (needUpdate) {
         const res = await (this.document as Nano.DocumentScope<any>).insert(
           fromDb,
