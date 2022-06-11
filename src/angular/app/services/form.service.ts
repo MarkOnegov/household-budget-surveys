@@ -5,7 +5,7 @@ import { FormBuilder } from '@angular/forms';
   providedIn: 'root',
 })
 export class FormService {
-  constructor(fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {}
 
   getForm(name: string) {
     return window.forms[name];
