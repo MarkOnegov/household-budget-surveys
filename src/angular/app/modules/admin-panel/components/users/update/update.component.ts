@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/common/types/user.types';
 import { UsersService } from '../users.service';
@@ -13,14 +13,14 @@ export class UpdateComponent implements OnInit {
 
   username?: string;
 
-  form = new FormGroup({
-    username: new FormControl(''),
-    firstName: new FormControl(''),
-    secondName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl('', [Validators.email]),
-    password: new FormControl(''),
-    confirmPassword: new FormControl(''),
+  form = new UntypedFormGroup({
+    username: new UntypedFormControl(''),
+    firstName: new UntypedFormControl(''),
+    secondName: new UntypedFormControl(''),
+    lastName: new UntypedFormControl(''),
+    email: new UntypedFormControl('', [Validators.email]),
+    password: new UntypedFormControl(''),
+    confirmPassword: new UntypedFormControl(''),
   });
 
   constructor(

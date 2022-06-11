@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -8,9 +8,9 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  loginForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
+  loginForm = new UntypedFormGroup({
+    username: new UntypedFormControl(''),
+    password: new UntypedFormControl(''),
   });
 
   constructor(private authService: AuthService, private router: Router) {}

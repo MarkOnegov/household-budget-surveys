@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormService {
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   getForm(name: string) {
     return window.forms[name];
