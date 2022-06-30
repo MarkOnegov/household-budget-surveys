@@ -17,7 +17,7 @@ import { UsersModule } from './users/users.module';
     }),
     ConfigModule.forRoot({ load: [configuration] }),
     NanoModule.forRoot({
-      connection: 'http://admin:admin@localhost:5984',
+      connection: { url: 'http://admin:admin@localhost:5984' },
       database: 'hbs',
       updateType: UpdateType.OVERWRITE_VIEW,
     }),

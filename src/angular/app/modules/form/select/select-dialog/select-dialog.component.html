@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>
+  {{
+    'SELECT.' +
+      (field.i18nSelectName || getI18N(field.form)) +
+      '.' +
+      getI18N(field.name) +
+      '.TITLE' | translate
+  }}
+</h1>
+<mat-dialog-content (scroll)="scroll($event)">
+  <mat-selection-list #list [multiple]="field.multiple">
+    <mat-list-option *ngFor="let item of items" [value]="field.getValue(item)">
+      {{ field.getDisplayValue(item) }}
+    </mat-list-option>
+  </mat-selection-list>
+
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button mat-dialog-close>
+    {{ 'SELECT.BUTTON.CLOSE' | translate }}
+  </button>
+  <button mat-flat-button [mat-dialog-close]="list.selectedOptions.selected">
+    {{ 'SELECT.BUTTON.SUBMIT' | translate }}
+  </button>
+</mat-dialog-actions>

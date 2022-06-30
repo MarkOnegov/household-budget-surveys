@@ -1,0 +1,58 @@
+<div class="loading" *ngIf="!progress">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+<header *ngIf="!!progress">
+  <p>
+    <b> {{ 'ADMIN_PANEL.HOUSEHOLDS.TABLE.COLUMNS.TERRITORY' | translate }}: </b>
+    {{ progress.territory }}
+  </p>
+  <p>
+    <b> {{ 'ADMIN_PANEL.HOUSEHOLDS.TABLE.COLUMNS.LOCALITY' | translate }}: </b>
+    {{ progress.locality }}
+  </p>
+  <p>
+    <b>
+      {{ 'ADMIN_PANEL.HOUSEHOLDS.TABLE.COLUMNS.DESCRIPTION' | translate }}:
+    </b>
+    {{ progress.description }}
+  </p>
+</header>
+<main *ngIf="!!progress">
+  <table mat-table [dataSource]="progress.forms">
+    <ng-container matColumnDef="section">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'HOUSEHOLD.TABLE.SECTION' | translate }}
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let progress"
+        [innerHtml]="getI18nSectionName(progress.name) | translate"
+      ></td>
+    </ng-container>
+    <ng-container matColumnDef="progress">
+      <th class="progress" mat-header-cell *matHeaderCellDef>
+        {{ 'HOUSEHOLD.TABLE.PROGRESS' | translate }}
+      </th>
+      <td class="progress" mat-cell *matCellDef="let progress">
+        <div class="progress-cell">
+          <mat-progress-spinner
+            *ngIf="progress.progress >= 0 && !progress.done"
+            [value]="progress.progress"
+            [diameter]="24"
+          ></mat-progress-spinner>
+          <mat-icon *ngIf="progress.done" color="primary"
+            >check_circle</mat-icon
+          >
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      class="section"
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [class.disabled]="row.progress < 0"
+      [routerLink]="['form', row.name]"
+    ></tr>
+  </table>
+</main>

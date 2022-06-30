@@ -1,0 +1,102 @@
+<form [formGroup]="formGroup">
+  <div class="field" *ngFor="let field of formFields" [ngSwitch]="field.type">
+    <ng-template ngSwitchCase="text">
+      <mat-form-field>
+        <mat-label>
+          {{
+            'FORM.' +
+              (form.i18nName || getI18N(field.form)) +
+              '.' +
+              getI18N(field.name) | translate
+          }}
+        </mat-label>
+        <input
+          matInput
+          type="text"
+          [required]="field.required || false"
+          [readonly]="field.readonly || false"
+          [formControlName]="field.name"
+          [mask]="getTextField(field).mask || ''"
+        />
+      </mat-form-field>
+    </ng-template>
+    <ng-template ngSwitchCase="number">
+      <mat-form-field>
+        <mat-label>
+          {{
+            'FORM.' +
+              (form.i18nName || getI18N(field.form)) +
+              '.' +
+              getI18N(field.name) | translate
+          }}
+        </mat-label>
+        <input
+          matInput
+          type="number"
+          [required]="field.required || false"
+          [readonly]="field.readonly || false"
+          [formControlName]="field.name"
+        />
+      </mat-form-field>
+    </ng-template>
+    <ng-template ngSwitchCase="enum">
+      <mat-form-field>
+        <mat-label>
+          {{
+            'FORM.' +
+              (form.i18nName || getI18N(field.form)) +
+              '.' +
+              getI18N(field.name) | translate
+          }}
+        </mat-label>
+        <mat-select
+          [formControlName]="field.name"
+          [required]="!!field.required"
+        >
+          <mat-option
+            *ngFor="let entity of getEnumField(field).values | keyvalue"
+            [value]="log(entity).value"
+          >
+            {{
+              'ENUM.' + getEnumField(field).i18nPrefix + '.' + entity.key
+                | translate
+            }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-template>
+    <ng-template ngSwitchCase="select">
+      <hbs-select [field]="getSelectField(field)"></hbs-select>
+    </ng-template>
+    <ng-template ngSwitchCase="date">
+      <mat-form-field>
+        <mat-label>
+          {{
+            'FORM.' +
+              (form.i18nName || getI18N(field.form)) +
+              '.' +
+              getI18N(field.name) | translate
+          }}
+        </mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [formControlName]="field.name"
+          [required]="!!field.required"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </ng-template>
+  </div>
+  <div class="actions">
+    <button
+      mat-flat-button
+      color="primary"
+      [disabled]="!formGroup.valid"
+      (click)="submit()"
+    >
+      {{ 'FORM.BUTTON.' + (isUpdate ? 'SUBMIT' : 'CREATE') | translate }}
+    </button>
+  </div>
+</form>

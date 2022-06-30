@@ -2,6 +2,7 @@ export interface Page {
   page: number;
   total: number;
   nextId: string;
+  length: number;
 }
 
 export interface PageQuery {

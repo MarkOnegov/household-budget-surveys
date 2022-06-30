@@ -9,7 +9,7 @@
   }}</span>
   <span class="spacer"></span>
   <button
-    *ngIf="authService.isAdmin()"
+    *ngIf="authService.isAdmin() | async"
     mat-icon-button
     [matTooltip]="'APP.TOOLBAR.ADMIN_PANEL' | translate"
     routerLink="admin-panel"
@@ -17,16 +17,15 @@
     <mat-icon>admin_panel_settings</mat-icon>
   </button>
   <a
-    *ngIf="!!authService.currentUser"
+    *ngIf="!!(authService.currentUser | async)"
     mat-icon-button
     [matTooltip]="'APP.TOOLBAR.LOGOUT' | translate"
     (click)="authService.logout()"
-    [routerLink]="'login'"
   >
     <mat-icon>logout</mat-icon>
   </a>
   <a
-    *ngIf="!authService.currentUser"
+    *ngIf="!(authService.currentUser | async)"
     mat-icon-button
     [matTooltip]="'APP.TOOLBAR.LOGIN' | translate"
     [routerLink]="'login'"

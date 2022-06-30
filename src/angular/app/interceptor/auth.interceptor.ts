@@ -5,15 +5,21 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { from, lastValueFrom, Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 const IGNORED_PATTERNS = [/\/api\/auth/, /\/assets\//];
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+  private get authService() {
+    return this.injector.get(AuthService);
+  }
+
+  constructor(private injector: Injector) {}
 
   intercept(
     request: HttpRequest<unknown>,

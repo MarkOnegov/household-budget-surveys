@@ -9,7 +9,6 @@ async function bootstrap() {
   app.useLogger(config.get('log.level') || []);
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
-
   await app.listen(config.get('http.port') as number, config.get('http.host'));
   if (module.hot) {
     module.hot.accept();

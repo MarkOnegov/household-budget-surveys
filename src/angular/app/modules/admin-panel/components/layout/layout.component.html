@@ -35,6 +35,7 @@
       *ngFor="let link of links"
       [routerLink]="link.link"
       routerLinkActive="router-link-active"
+      [routerLinkActiveOptions]="{ exact: true }"
       (click)="drawer.close()"
     >
       {{ link.label | translate }}

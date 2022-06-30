@@ -1,23 +1,37 @@
 <table mat-table [dataSource]="dataSource">
-  <ng-container matColumnDef="name">
+  <ng-container matColumnDef="territory">
     <th mat-header-cell *matHeaderCellDef>
-      {{ 'ADMIN_PANEL.USERS.TABLE.COLUMNS.NAME' | translate }}
+      {{ 'ADMIN_PANEL.HOUSEHOLDS.TABLE.COLUMNS.TERRITORY' | translate }}
     </th>
-    <td mat-cell *matCellDef="let user">{{ getName(user) }}</td>
+    <td mat-cell *matCellDef="let household">{{ household.territory }}</td>
   </ng-container>
-  <ng-container matColumnDef="email">
+  <ng-container matColumnDef="locality">
     <th mat-header-cell *matHeaderCellDef>
-      {{ 'ADMIN_PANEL.USERS.TABLE.COLUMNS.EMAIL' | translate }}
+      {{ 'ADMIN_PANEL.HOUSEHOLDS.TABLE.COLUMNS.LOCALITY' | translate }}
     </th>
-    <td mat-cell *matCellDef="let user">
-      <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+    <td mat-cell *matCellDef="let household">{{ household.locality }}</td>
+  </ng-container>
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ 'ADMIN_PANEL.HOUSEHOLDS.TABLE.COLUMNS.DESCRIPTION' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let household">{{ household.description }}</td>
+  </ng-container>
+  <ng-container matColumnDef="menu">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td class="menu" mat-cell *matCellDef="let household">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="household._id">
+          {{ 'ADMIN_PANEL.HOUSEHOLDS.TABLE.MENU.EDIT' | translate }}
+        </button>
+        <button mat-menu-item (click)="export(household._id)">
+          {{ 'ADMIN_PANEL.HOUSEHOLDS.TABLE.MENU.EXPORT' | translate }}
+        </button>
+      </mat-menu>
     </td>
-  </ng-container>
-  <ng-container matColumnDef="roles">
-    <th mat-header-cell *matHeaderCellDef>
-      {{ 'ADMIN_PANEL.USERS.TABLE.COLUMNS.ROLES' | translate }}
-    </th>
-    <td mat-cell *matCellDef="let user">{{ getRoles(user) }}</td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -32,10 +46,15 @@
 >
 </mat-paginator>
 <div class="button-wrapper" [class.center]="!isSmallScreen">
-  <button mat-fab [class.mat-fab-text]="!isSmallScreen" color="primary">
+  <a
+    mat-fab
+    [class.mat-fab-text]="!isSmallScreen"
+    color="primary"
+    routerLink="new"
+  >
     <mat-icon>add</mat-icon>
     <span *ngIf="!isSmallScreen">
       {{ 'BUTTONS.CREATE' | translate | uppercase }}
     </span>
-  </button>
+  </a>
 </div>

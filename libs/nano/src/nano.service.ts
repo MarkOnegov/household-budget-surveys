@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional } from '@nestjs/common';
+import { Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import * as Nano from 'nano';
 import { NanoConfiguration, UpdateType } from './nano.module';
 
@@ -20,6 +20,7 @@ export class NanoService {
   private static server: Nano.ServerScope;
   private static database: Nano.DatabaseScope;
   private static document: Nano.DocumentScope<BaseDocument>;
+  private static logger = new Logger(NanoService.name);
 
   private static updateType?: UpdateType;
 
@@ -51,7 +52,10 @@ export class NanoService {
   }
 
   private static async init(config: NanoConfiguration) {
-    this.server = Nano(config.connection);
+    this.server = Nano({
+      ...config.connection,
+      log: (message) => this.logger.debug(message),
+    });
     this.database = this.server.db;
     const dbs = await this.database.list();
     if (!dbs.includes(config.database)) {

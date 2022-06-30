@@ -1,0 +1,17 @@
+<mat-form-field>
+  <mat-label>
+    {{
+      'FORM.' +
+        (field.i18nName || getI18N(field.form)) +
+        '.' +
+        getI18N(field.name) | translate
+    }}
+  </mat-label>
+  <input
+    matInput
+    [required]="field.required || false"
+    [readonly]="true"
+    [value]="field.getDisplayValue(selectedItem) || ''"
+  />
+  <mat-icon matSuffix (click)="openDialog()">list</mat-icon>
+</mat-form-field>

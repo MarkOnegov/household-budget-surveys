@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/common/types/user.types';
 import { UsersService } from '../users.service';
@@ -8,7 +12,7 @@ import { UsersService } from '../users.service';
   templateUrl: './update.component.html',
   styleUrls: ['./update.component.scss'],
 })
-export class UpdateComponent implements OnInit {
+export class UpdateComponent {
   create = false;
 
   username?: string;
@@ -56,6 +60,4 @@ export class UpdateComponent implements OnInit {
       }
     });
   }
-
-  ngOnInit(): void {}
 }

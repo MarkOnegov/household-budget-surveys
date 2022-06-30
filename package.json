@@ -19,7 +19,7 @@
     "nest:test:cov": "jest --coverage",
     "nest:test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "nest:test:e2e": "jest --config ./test/nest/jest-e2e.json",
-    "angular:start": "ng serve",
+    "angular:start": "ng serve --disable-host-check",
     "angular:build": "ng build",
     "angular:test": "ng test",
     "lint": "eslint \"{src,test}/**/*.ts\" --fix"
@@ -50,6 +50,7 @@
     "class-validator": "^0.13.2",
     "js-yaml": "^4.1.0",
     "nano": "^10.0.0",
+    "ngx-mask": "^14.0.3",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",

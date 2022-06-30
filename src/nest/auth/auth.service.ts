@@ -84,18 +84,22 @@ export class AuthService {
       setTimeout(() => this.init(), 100);
       return;
     }
-    this.nanoService.documentScope
-      .view('users', 'auth', { key: 'admin' })
-      .then((data) => {
-        if (!data.rows.length) {
-          this.usersService.createUser({
-            email: 'admin@hbs.ru',
-            password: 'admin',
-            roles: [Role.ADMIN, Role.USER],
-            username: 'admin',
-          });
-        }
-      })
-      .catch((err) => console.error(err));
+    setTimeout(
+      () =>
+        this.nanoService.documentScope
+          .view('users', 'auth', { key: 'admin' })
+          .then((data) => {
+            if (!data.rows.length) {
+              this.usersService.createUser({
+                email: 'admin@hbs.ru',
+                password: 'admin',
+                roles: [Role.ADMIN, Role.USER],
+                username: 'admin',
+              });
+            }
+          })
+          .catch((err) => console.error(err)),
+      1000,
+    );
   }
 }

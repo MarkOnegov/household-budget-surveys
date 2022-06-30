@@ -1,0 +1,9 @@
+<mat-progress-spinner *ngIf="!form" mode="indeterminate"></mat-progress-spinner>
+<mat-card *ngIf="!!form">
+  <mat-card-title
+    [innerHtml]="getI18nSectionName(form) | translate"
+  ></mat-card-title>
+  <mat-card-content>
+    <hbs-form [formName]="form"></hbs-form>
+  </mat-card-content>
+</mat-card>

@@ -7,13 +7,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormModule } from '../form/form.module';
 import { AdminPanelRoutingModule } from './admin-panel-routing.module';
 import { AdminPanelComponent } from './admin-panel.component';
 import { HouseholdsComponent } from './components/households/households.component';
+import { UpdateHouseholdComponent } from './components/households/update-household.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { UpdateComponent as UpdateUserComponent } from './components/users/update/update.component';
 import { UsersComponent } from './components/users/users.component';
@@ -25,6 +28,7 @@ import { UsersComponent } from './components/users/users.component';
     HouseholdsComponent,
     LayoutComponent,
     UpdateUserComponent,
+    UpdateHouseholdComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +45,8 @@ import { UsersComponent } from './components/users/users.component';
     ReactiveFormsModule,
     FormsModule,
     MatInputModule,
+    FormModule,
+    MatMenuModule,
   ],
 })
 export class AdminPanelModule {}

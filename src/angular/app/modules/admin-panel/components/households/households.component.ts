@@ -2,17 +2,18 @@ import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
+import { HouseholdsService } from 'src/angular/app/services/households.service';
 import { ResizeService } from 'src/angular/app/services/resize.service';
-import { Role, User } from 'src/common/types/user.types';
-import { UsersService } from '../users/users.service';
+import { Household } from 'src/common/types/household.types';
+import { Role } from 'src/common/types/user.types';
 
 @Component({
   templateUrl: './households.component.html',
   styleUrls: ['./households.component.scss'],
 })
 export class HouseholdsComponent {
-  displayedColumns = ['name', 'email', 'roles'];
-  dataSource = new Subject<User[]>();
+  displayedColumns = ['territory', 'locality', 'description', 'menu'];
+  dataSource = new Subject<Household[]>();
 
   roleNames: { [id: string]: string } = {};
 
@@ -24,7 +25,7 @@ export class HouseholdsComponent {
   isSmallScreen = false;
 
   constructor(
-    private usersService: UsersService,
+    private householdsService: HouseholdsService,
     translate: TranslateService,
     public resizeService: ResizeService,
   ) {
@@ -46,33 +47,18 @@ export class HouseholdsComponent {
     this.updateList(pageIndex, pageSize);
   }
 
-  getName({ username, firstName, secondName, lastName }: User) {
-    if (!firstName && !secondName && !lastName) {
-      return username;
-    }
-    let name = '';
-    if (firstName) {
-      name += firstName + ' ';
-    }
-    if (secondName) {
-      name += secondName + ' ';
-    }
-    if (lastName) {
-      name += lastName + ' ';
-    }
-    return name + `(${username})`;
+  export(id: string) {
+    this.householdsService.export(id);
   }
 
-  getRoles(user: User) {
-    return user.roles
-      .sort()
-      .map((role) => this.roleNames[role])
-      .join(', ');
+  log<T>(data: T): T {
+    console.log(data);
+    return data;
   }
 
   private updateList(pageIndex: number, pageSize: number) {
-    this.usersService
-      .getUsers(pageIndex, pageSize)
+    this.householdsService
+      .getHouseholds(pageIndex, pageSize)
       .subscribe(({ data, pagination }) => {
         this.dataSource.next(data);
         this.length = pagination.total;

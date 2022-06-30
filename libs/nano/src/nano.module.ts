@@ -9,7 +9,7 @@ export enum UpdateType {
 }
 
 export type NanoConfiguration = {
-  connection: string | Nano.Configuration;
+  connection: Nano.Configuration;
   database: string;
   designs?: Designs;
   updateType?: UpdateType;

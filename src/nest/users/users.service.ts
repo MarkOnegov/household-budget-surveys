@@ -17,6 +17,7 @@ export class UsersService {
     return (
       await this.nanoService.documentScope.view<User>('users', 'users', {
         key: username,
+        limit: 1,
       })
     ).rows[0]?.value;
   }
@@ -36,7 +37,7 @@ export class UsersService {
     }
     const viewParams: DocumentViewParams = { limit: query.length + 1 };
     if (query.nextId) {
-      viewParams.start_key_doc_id = query.nextId;
+      viewParams.startkey = query.nextId;
     } else {
       viewParams.skip = query.page * query.length;
     }
@@ -48,9 +49,10 @@ export class UsersService {
       );
     return this.getPage(
       rows.map((r) => r.value).slice(0, query.length),
-      rows[query.length]?.id,
+      rows[query.length]?.key,
       query.page,
       total_rows,
+      query.length,
     );
   }
 
@@ -74,11 +76,12 @@ export class UsersService {
     nextId: string,
     page: number,
     total: number,
+    length: number,
     desc?: boolean,
   ): Paginated<T> {
     return {
       data: desc ? data.reverse() : data,
-      pagination: { nextId, page, total },
+      pagination: { nextId, page, total, length },
     };
   }
 }

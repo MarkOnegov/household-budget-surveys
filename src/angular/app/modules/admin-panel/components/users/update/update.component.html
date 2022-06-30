@@ -11,13 +11,18 @@
         <mat-label>
           {{ 'ADMIN_PANEL.USERS.UPDATE.USERNAME' | translate }}
         </mat-label>
-        <input formControlName="username" [required]="create" matInput />
+        <input
+          formControlName="username"
+          [required]="create"
+          matInput
+          autocomplete="username"
+        />
       </mat-form-field>
       <mat-form-field>
         <mat-label>
           {{ 'ADMIN_PANEL.USERS.UPDATE.FIRST_NAME' | translate }}
         </mat-label>
-        <input formControlName="firstName" matInput />
+        <input formControlName="firstName" matInput autocomplete="given-name" />
       </mat-form-field>
       <mat-form-field>
         <mat-label>
@@ -29,13 +34,19 @@
         <mat-label>
           {{ 'ADMIN_PANEL.USERS.UPDATE.LAST_NAME' | translate }}
         </mat-label>
-        <input formControlName="lastName" matInput />
+        <input formControlName="lastName" matInput autocomplete="family-name" />
       </mat-form-field>
       <mat-form-field>
         <mat-label>
           {{ 'ADMIN_PANEL.USERS.UPDATE.EMAIL' | translate }}
         </mat-label>
-        <input formControlName="email" type="email" matInput required />
+        <input
+          formControlName="email"
+          type="email"
+          matInput
+          required
+          autocomplete="email"
+        />
       </mat-form-field>
       <mat-form-field>
         <mat-label>
@@ -46,6 +57,7 @@
           type="password"
           matInput
           [required]="create"
+          autocomplete="new-password"
         />
       </mat-form-field>
       <mat-form-field>
@@ -57,6 +69,7 @@
           type="password"
           matInput
           [required]="create"
+          autocomplete="new-password"
         />
       </mat-form-field>
     </mat-card-content>
